@@ -51,17 +51,24 @@ class Match:
 		if len(dict['relationships']['assets']['data']) > 1:
 			print('Hey, I found a match that has a few more assets')
 
-		self.Teams = set()
+		self.Teams = {}
 		self.Participants = {}
-		teamIds = set()
+		self.Assets = {}
 		for item in included:
-			if item['type'] == 'participant' and item['id'] not in participantIds:
-				participantIds.add(item['id'])
-				self.Participants.add(Participant(item))
-			elif item['type'] == 'roster' and item['id'] not in teamIds:
-				teamIds.add(item['id'])
-				self.Teams.add(Team(item))
+			if item['type'] == 'participant' and item['id'] not in self.Participants:
+				self.Participants[item['id']] = Participant(item)
+			elif item['type'] == 'roster' and item['id'] not in self.Teams:
+				self.Teams[item['id']] = Team(item)
+			elif item['type'] == 'asset' and item['id'] not in self.Assets:
+				self.Assets[item['id']] = Asset(item)
+
 		return
+
+	def getTelemetry(self):
+		asset = self.Assets[self.TelemetryId]
+		if asset.Value is None:
+			asset.request()
+		return asset.Value
 
 class Participant:
 	def __init__(self, dict):
@@ -79,6 +86,23 @@ class Team:
 		self.Participants = set(p['id'] for p in dict['relationships']['participants']['data'])
 		return
 
+class Asset:
+	def __init__(self, dict):
+		self.Id = dict['id']
+		self.CreatedAt = dict['attributes']['createdAt']
+		self.Name = dict['attributes']['name']
+		self.URL = dict['attributes']['URL']
+		self.Value = None
+		return
+
+	def request(self):
+		header = {
+		  "Accept": "application/vnd.api+json"
+		}
+		r = requests.get(self.URL, headers=header)
+		self.Value = r.json()
+		return
+
 
 class QueryManager():
 	apiURL = 'https://api.playbattlegrounds.com/shards/pc-na'
@@ -93,8 +117,9 @@ class QueryManager():
 		else:
 			self.CachedDB = { 
 				'Players': {},
+				'PlayerIdToName': {},
 				'Matches': {},
-				'Telemetry': {}
+				'Assets': {}
 			}
 		return
 		
@@ -133,7 +158,7 @@ class QueryManager():
 		match = Match(*self.request(QueryManager.apiURL + '/matches/{}'.format(matchID)))
 		self.CachedDB['Matches'][matchID] = match
 		return match
-		
+
 	def request(self, reqUrl):
 		header = {
 		  "Authorization": "Bearer {}".format(self.APIKey),
@@ -170,6 +195,7 @@ def main():
 	match = qm.getMatchDetails(m)
 	print(match.CreatedAt)
 
+	match.getTelemetry()
 	qm.saveDB()
 	return
 
