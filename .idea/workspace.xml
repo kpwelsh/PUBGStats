@@ -16,11 +16,16 @@
           <file leaf-file-name="QueryManager.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/QueryManager.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="290">
-                  <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
+                <state relative-caret-position="411">
+                  <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
                   <folding>
                     <element signature="e#0#15#0" expanded="true" />
                     <element signature="e#166#361#0" />
+                    <element signature="e#2004#2344#0" />
+                    <element signature="e#2376#2815#0" />
+                    <element signature="e#1720#1970#0" />
+                    <element signature="e#1695#2796#0" />
+                    <element signature="e#2301#3372#0" />
                     <element signature="e#2497#2506#0" />
                     <element signature="e#2717#2726#0" />
                     <element signature="e#2391#3797#0" />
@@ -28,8 +33,7 @@
                     <element signature="e#3848#5004#0" />
                     <element signature="e#3274#3515#0" />
                     <element signature="e#5041#5530#0" />
-                    <element signature="e#2573#2913#0" />
-                    <element signature="e#3401#3846#0" />
+                    <element signature="e#3243#3909#0" />
                     <element signature="e#3643#3766#0" />
                     <element signature="e#3165#4090#0" />
                     <element signature="e#3574#3958#0" />
@@ -235,6 +239,11 @@
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#166#361#0" />
+            <element signature="e#2004#2344#0" />
+            <element signature="e#2376#2815#0" />
+            <element signature="e#1720#1970#0" />
+            <element signature="e#1695#2796#0" />
+            <element signature="e#2301#3372#0" />
             <element signature="e#2497#2506#0" />
             <element signature="e#2717#2726#0" />
             <element signature="e#2391#3797#0" />
@@ -242,8 +251,7 @@
             <element signature="e#3848#5004#0" />
             <element signature="e#3274#3515#0" />
             <element signature="e#5041#5530#0" />
-            <element signature="e#2573#2913#0" />
-            <element signature="e#3401#3846#0" />
+            <element signature="e#3243#3909#0" />
             <element signature="e#3643#3766#0" />
             <element signature="e#3165#4090#0" />
             <element signature="e#3574#3958#0" />
@@ -289,11 +297,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/QueryManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
+        <state relative-caret-position="411">
+          <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#166#361#0" />
+            <element signature="e#2004#2344#0" />
+            <element signature="e#2376#2815#0" />
+            <element signature="e#1720#1970#0" />
+            <element signature="e#1695#2796#0" />
+            <element signature="e#2301#3372#0" />
             <element signature="e#2497#2506#0" />
             <element signature="e#2717#2726#0" />
             <element signature="e#2391#3797#0" />
@@ -301,8 +314,7 @@
             <element signature="e#3848#5004#0" />
             <element signature="e#3274#3515#0" />
             <element signature="e#5041#5530#0" />
-            <element signature="e#2573#2913#0" />
-            <element signature="e#3401#3846#0" />
+            <element signature="e#3243#3909#0" />
             <element signature="e#3643#3766#0" />
             <element signature="e#3165#4090#0" />
             <element signature="e#3574#3958#0" />

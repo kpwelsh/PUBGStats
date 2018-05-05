@@ -36,35 +36,34 @@ class QueryManager():
 		self.createTables()
 		return
 
-	def createTables(self):
-		script = ('''
-			create table if not exists PlayerDim 
-				(PlayerId, Name, QueryTime, ShardId, CreatedAt, UpdatedAt, PatchVersion, MatchComboKey);
-			
-			create table if not exists MatchBridge 
-				(MatchComboKey, MatchKey, Number);
-			
-			create table if not exists MatchFact
-				(MatchId, MapName, Duration, TelemetryUrl, CreatedAt, ShardId, TitleId, TeamComboKey, ParticipantComboKey);
-			
-			create table if not exists ParticipantBridge 
-				(ParticipantComboKey, ParticipantKey);
-				
-			create table if not exists ParticipantFact
-				(ParticipantId,PlayerId,Name,KillPlace,KillPoints,LastKillPoints,
-				KillPointsDelta,WinPlace,WinPoints,LastWinPoints ,WinPointsDelta,DBNOs,
-				TimeSurvived,Boosts,Heals,DeathType,Revives,Kills,HeadshotKills,
-				KillStreaks,LongestKill,RoadKills,TeamKills,Assists,MostDamage,DamageDealt,
-				RideDistance,VehicleDestroys,WalkDistance,WeaponsAcquired);
-			
-			create table if not exists TeamBridge 
-				(TeamComboKey, TeamKey);
-				
-			create table if not exists TeamFact
-				(TeamId,Rank,TeamNumber,Won,ParticipantComboKey);
-			''')
-		self.Cursor.executescript(script)
-		return
+	# Public API
+	def getPlayerById(self, id):
+		self.Cursor.execute('select PlayerDim.Name from PlayerDim where PlayerDim.PlayerId = ?', (id, ))
+		name = self.Cursor.fetchone()
+		if name is not None:
+			return self.getPlayer(name)
+
+		player, _ = self.request(QueryManager.apiURL + '/players/{}'.format(id))
+		player = Player.FromJSON(player)
+
+		self.savePlayerToDB(player)
+		return player
+
+	def getPlayer(self, name):
+		oldPlayer = self.getPlayerFromDB(name)
+		if oldPlayer is not None and time.time() - oldPlayer.QueryTime < 900:
+			return oldPlayer
+
+		player, _ = self.request(QueryManager.apiURL + '/players?filter[playerNames]={}'.format(name))
+		player = Player.FromJSON(player[0])  # Gets a list of players. Just need the one.
+
+		if oldPlayer is not None:
+			oldPlayer.update(player)
+			player = oldPlayer
+
+		self.savePlayerToDB(player)
+
+		return player
 
 	def getMatchDetails(self, matchID):
 		match = self.getMatchFromDB(matchID)
@@ -77,6 +76,39 @@ class QueryManager():
 		self.saveMatchToDB(match)
 
 		return match
+
+
+	# Private
+	def createTables(self):
+		script = ('''
+			create table if not exists PlayerDim 
+				(PlayerId, Name, QueryTime, ShardId, CreatedAt, UpdatedAt, PatchVersion, MatchComboKey);
+
+			create table if not exists MatchBridge 
+				(MatchComboKey, MatchKey, Number);
+
+			create table if not exists MatchFact
+				(MatchId, MapName, Duration, TelemetryUrl, CreatedAt, ShardId, TitleId, TeamComboKey, ParticipantComboKey);
+
+			create table if not exists ParticipantBridge 
+				(ParticipantComboKey, ParticipantKey);
+
+			create table if not exists ParticipantFact
+				(ParticipantId,PlayerId,Name,KillPlace,KillPoints,LastKillPoints,
+				KillPointsDelta,WinPlace,WinPoints,LastWinPoints ,WinPointsDelta,DBNOs,
+				TimeSurvived,Boosts,Heals,DeathType,Revives,Kills,HeadshotKills,
+				KillStreaks,LongestKill,RoadKills,TeamKills,Assists,MostDamage,DamageDealt,
+				RideDistance,VehicleDestroys,WalkDistance,WeaponsAcquired);
+
+			create table if not exists TeamBridge 
+				(TeamComboKey, TeamKey);
+
+			create table if not exists TeamFact
+				(TeamId,Rank,TeamNumber,Won,ParticipantComboKey);
+			''')
+		self.Cursor.executescript(script)
+		return
+
 
 	def getMatchFromDB(self, matchId):
 		self.Cursor.execute('select * from MatchFact where MatchFact.MatchId = ?', (matchId, ))
@@ -254,34 +286,6 @@ class QueryManager():
 
 		return True
 
-	#Player things
-	def getPlayerById(self, id):
-		self.Cursor.execute('select PlayerDim.Name from PlayerDim where PlayerDim.PlayerId = ?', (id, ))
-		name = self.Cursor.fetchone()
-		if name is not None:
-			return self.getPlayer(name)
-
-		player, _ = self.request(QueryManager.apiURL + '/players/{}'.format(id))
-		player = Player.FromJSON(player)
-
-		self.savePlayerToDB(player)
-		return player
-
-	def getPlayer(self, name):
-		oldPlayer = self.getPlayerFromDB(name)
-		if oldPlayer is not None and time.time() - oldPlayer.QueryTime < 900:
-			return oldPlayer
-
-		player, _ = self.request(QueryManager.apiURL + '/players?filter[playerNames]={}'.format(name))
-		player = Player.FromJSON(player[0])  # Gets a list of players. Just need the one.
-
-		if oldPlayer is not None:
-			oldPlayer.update(player)
-			player = oldPlayer
-
-		self.savePlayerToDB(player)
-
-		return player
 
 	def getPlayerFromDB(self, name = None, id = None):
 		assert name is not None or id is not None, 'Needs an id for the player'
@@ -338,7 +342,6 @@ class QueryManager():
 		self.Cursor.execute('delete from MatchBridge where MatchBridge.MatchComboKey = ?', (player.MatchComboKey,))
 		self.Cursor.executemany('insert into MatchBridge values (?,?,?)', bridgeRows)
 		return True
-	#End Player Things
 
 	def request(self, reqUrl):
 		header = {
@@ -369,7 +372,6 @@ def main():
 	match = qm.getMatchDetails(m)
 	print(match.CreatedAt)
 
-	#match.getTelemetry()
 	return
 
 if __name__ == '__main__':
