@@ -10,28 +10,76 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="PubgStats.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PubgStats.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="639">
-              <caret line="197" column="24" lean-forward="true" selection-start-line="197" selection-start-column="24" selection-end-line="197" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <element signature="e#2127#2551#0" />
-                <element signature="e#3527#3857#0" />
-                <element signature="e#3408#3634#0" />
-                <element signature="e#3269#3385#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="QueryManager.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/QueryManager.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="290">
+                  <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                    <element signature="e#166#361#0" />
+                    <element signature="e#2497#2506#0" />
+                    <element signature="e#2717#2726#0" />
+                    <element signature="e#2391#3797#0" />
+                    <element signature="e#2506#2516#0" />
+                    <element signature="e#3848#5004#0" />
+                    <element signature="e#3274#3515#0" />
+                    <element signature="e#5041#5530#0" />
+                    <element signature="e#2573#2913#0" />
+                    <element signature="e#3401#3846#0" />
+                    <element signature="e#3643#3766#0" />
+                    <element signature="e#3165#4090#0" />
+                    <element signature="e#3574#3958#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="PUBGModels.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/PUBGModels.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="351">
+                  <caret line="218" column="24" lean-forward="true" selection-start-line="218" selection-start-column="24" selection-end-line="218" selection-end-column="24" />
+                  <folding>
+                    <element signature="e#84#232#0" />
+                    <element signature="e#82#1560#0" />
+                    <element signature="e#123#557#0" />
+                    <element signature="e#3210#6108#0" />
+                    <element signature="e#3213#4983#0" />
+                    <element signature="e#3238#3988#0" />
+                    <element signature="e#5098#6108#0" />
+                    <element signature="e#7765#8129#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>..</find>
+      <find>setTime</find>
+      <find>PlayerFact</find>
+      <find>*match</find>
+      <find>*</find>
+      <find>tuple</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -41,12 +89,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/PubgStats.py" />
+        <option value="$PROJECT_DIR$/PUBGModels.py" />
+        <option value="$PROJECT_DIR$/QueryManager.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="260" />
-    <option name="y" value="20" />
+    <option name="x" value="53" />
+    <option name="y" value="-14" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -55,32 +105,10 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="PUBGStats" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PUBGStats" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PUBGStats" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="PUBGStats" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.6 (PUBGStats) &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -102,7 +130,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.QueryManager">
     <configuration name="PubgStats" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="PUBGStats" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -121,8 +149,31 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="QueryManager" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="PUBGStats" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/QueryManager.py" />
+      <option name="PARAMETERS" value="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNTg2OGRjMC0zMDkwLTAxMzYtMTZiZC0xOWVhNzI2ZTU4NWEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTI1MzA0NDQwLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InB1Ymdib3QtOTY4ZWQzYjMtYTcyOC00YjEzLWE2ZjctNjc4NGFjMDVjYzdiIiwic2NvcGUiOiJjb21tdW5pdHkiLCJsaW1pdCI6MTB9.sAr832RmP1KanUPdqN044HyHoBI2mSUtQfEIc3phzPk" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.PubgStats" />
+      <item itemvalue="Python.QueryManager" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.QueryManager" />
         <item itemvalue="Python.PubgStats" />
       </list>
     </recent_temporary>
@@ -146,42 +197,115 @@
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.17175975" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info active="true" anchor="bottom" auto_hide="true" x="945" y="108" width="953" height="852" id="Run" order="2" type="FLOATING" visible="true" weight="0.3278867" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Python Console" order="7" sideWeight="0.5700738" visible="true" weight="0.21436344" />
+      <window_info active="true" anchor="bottom" auto_hide="true" x="966" y="43" width="953" height="850" id="Run" order="2" type="FLOATING" visible="true" weight="0.3278867" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.42992625" side_tool="true" weight="0.32861805" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <option name="time" value="29" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/PubgStats.py">
+    <entry file="file://$PROJECT_DIR$/QueryManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="639">
-          <caret line="197" column="24" lean-forward="true" selection-start-line="197" selection-start-column="24" selection-end-line="197" selection-end-column="24" />
+        <state relative-caret-position="1020">
+          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
-            <element signature="e#2127#2551#0" />
-            <element signature="e#3527#3857#0" />
-            <element signature="e#3408#3634#0" />
-            <element signature="e#3269#3385#0" />
+            <element signature="e#166#361#0" />
+            <element signature="e#2497#2506#0" />
+            <element signature="e#2717#2726#0" />
+            <element signature="e#2391#3797#0" />
+            <element signature="e#2506#2516#0" />
+            <element signature="e#3848#5004#0" />
+            <element signature="e#3274#3515#0" />
+            <element signature="e#5041#5530#0" />
+            <element signature="e#2573#2913#0" />
+            <element signature="e#3401#3846#0" />
+            <element signature="e#3643#3766#0" />
+            <element signature="e#3165#4090#0" />
+            <element signature="e#3574#3958#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PUBGModels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+          <folding>
+            <element signature="e#84#232#0" />
+            <element signature="e#82#1560#0" />
+            <element signature="e#123#557#0" />
+            <element signature="e#3210#6108#0" />
+            <element signature="e#3213#4983#0" />
+            <element signature="e#3238#3988#0" />
+            <element signature="e#5098#6108#0" />
+            <element signature="e#7765#8129#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PubgStats.py" />
+    <entry file="file://$PROJECT_DIR$/PubgStats.py" />
+    <entry file="file://$PROJECT_DIR$/PUBGModels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="218" column="24" lean-forward="true" selection-start-line="218" selection-start-column="24" selection-end-line="218" selection-end-column="24" />
+          <folding>
+            <element signature="e#84#232#0" />
+            <element signature="e#82#1560#0" />
+            <element signature="e#123#557#0" />
+            <element signature="e#3210#6108#0" />
+            <element signature="e#3213#4983#0" />
+            <element signature="e#3238#3988#0" />
+            <element signature="e#5098#6108#0" />
+            <element signature="e#7765#8129#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/QueryManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#166#361#0" />
+            <element signature="e#2497#2506#0" />
+            <element signature="e#2717#2726#0" />
+            <element signature="e#2391#3797#0" />
+            <element signature="e#2506#2516#0" />
+            <element signature="e#3848#5004#0" />
+            <element signature="e#3274#3515#0" />
+            <element signature="e#5041#5530#0" />
+            <element signature="e#2573#2913#0" />
+            <element signature="e#3401#3846#0" />
+            <element signature="e#3643#3766#0" />
+            <element signature="e#3165#4090#0" />
+            <element signature="e#3574#3958#0" />
           </folding>
         </state>
       </provider>
