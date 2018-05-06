@@ -10,6 +10,8 @@ from PUBGModels import *
 
 
 # This is a huge bag of dicks.
+# This is a function that can only be used as a decorator for the QueryManager class, and should not be
+# exposed to anything else. But, I can't figure out how to get it inside of the class.
 def SQLCommit(func):
 	def wrapper(manager, *args, **kwargs):
 		try:
@@ -33,7 +35,7 @@ class QueryManager():
 		self.DBConnection = sqlite3.connect(fp)
 		self.DBConnection.row_factory = sqlite3.Row
 		self.Cursor = self.DBConnection.cursor()
-		self.createTables()
+		self._createTables()
 		return
 
 	# Public API
@@ -43,43 +45,43 @@ class QueryManager():
 		if name is not None:
 			return self.getPlayer(name)
 
-		player, _ = self.request(QueryManager.apiURL + '/players/{}'.format(id))
+		player, _ = self._request(QueryManager.apiURL + '/players/{}'.format(id))
 		player = Player.FromJSON(player)
 
-		self.savePlayerToDB(player)
+		self._savePlayerToDB(player)
 		return player
 
 	def getPlayer(self, name):
-		oldPlayer = self.getPlayerFromDB(name)
+		oldPlayer = self._getPlayerFromDB(name)
 		if oldPlayer is not None and time.time() - oldPlayer.QueryTime < 900:
 			return oldPlayer
 
-		player, _ = self.request(QueryManager.apiURL + '/players?filter[playerNames]={}'.format(name))
+		player, _ = self._request(QueryManager.apiURL + '/players?filter[playerNames]={}'.format(name))
 		player = Player.FromJSON(player[0])  # Gets a list of players. Just need the one.
 
 		if oldPlayer is not None:
 			oldPlayer.update(player)
 			player = oldPlayer
 
-		self.savePlayerToDB(player)
+		self._savePlayerToDB(player)
 
 		return player
 
 	def getMatchDetails(self, matchID):
-		match = self.getMatchFromDB(matchID)
+		match = self._getMatchFromDB(matchID)
 		if match is not None:
 			return match
 
-		match, included = self.request(QueryManager.apiURL + '/matches/{}'.format(matchID))
+		match, included = self._request(QueryManager.apiURL + '/matches/{}'.format(matchID))
 		match = Match.FromJSON(match, included)
 
-		self.saveMatchToDB(match)
+		self._saveMatchToDB(match)
 
 		return match
 
 
 	# Private
-	def createTables(self):
+	def _createTables(self):
 		script = ('''
 			create table if not exists PlayerDim 
 				(PlayerId, Name, QueryTime, ShardId, CreatedAt, UpdatedAt, PatchVersion, MatchComboKey);
@@ -105,12 +107,38 @@ class QueryManager():
 
 			create table if not exists TeamFact
 				(TeamId,Rank,TeamNumber,Won,ParticipantComboKey);
+				
+			create table if not exists PositionEventFact
+				(PlayerId, Time, Version, MatchId, Health, NumPlayersAlive, Ranking, TeamNumber, X, Y, Z
+				,primary key (PlayerId, Time));
+			
+			create table if not exists AttackEventFact
+				(AttackId, MatchId, Time, Version, AttackerId, AttackType, WeaponProfileId, VehicleType, VehicleId, 
+					VehicleHealthPercent, FuelPercent
+				,primary key (AttackId, MatchId));
+				
+			create table if not exists DamageEventFact
+				(AttackId, MatchId, Time, Version, AttackerId, AttackerX, AttackerY, AttackerZ, AttackerHealth,
+				 	VictimId, VictimX, VictimY, VictimZ, VictimHealth,  DamageReason, Damage, 
+				primary key (AttackId, MatchId));
+				
+			create table if not exists KillEventFact
+				(AttackId, MatchId, Time, Version, AttackerId, AttackerX, AttackerY, AttackerZ, AttackerHealth,
+				 	VictimId, VictimX, VictimY, VictimZ, VictimHealth, Distance, DamageCauserName, DamageType,
+				primary key (AttachId, MatchId));
+				
+			create table if not exists ItemUseEventFact
+				(PlayerId, Time, Version, MatchId, Health, ItemId, Category, SubCategory,
+					primary key (PlayerId, Time));
+				
+			create table if not exists CarePackageSpawnEventFact
+				(MatchId, Time, Version, 
+				
 			''')
 		self.Cursor.executescript(script)
 		return
 
-
-	def getMatchFromDB(self, matchId):
+	def _getMatchFromDB(self, matchId):
 		self.Cursor.execute('select * from MatchFact where MatchFact.MatchId = ?', (matchId, ))
 		m = self.Cursor.fetchone()
 
@@ -140,7 +168,7 @@ class QueryManager():
 		self.Cursor.execute('''
 			select 
 				TeamKey
-			from TeamBridge
+		from TeamBridge
 			where TeamComboKey = ?
 		''', (match.TeamComboKey,))
 
@@ -156,7 +184,7 @@ class QueryManager():
 		return match
 
 	@SQLCommit
-	def saveMatchToDB(self, match):
+	def _saveMatchToDB(self, match):
 		# Saving to MatchFact
 		self.Cursor.execute('''
 				select 
@@ -193,7 +221,7 @@ class QueryManager():
 
 		#Saving Participants
 		for p in match.Participants:
-			self.saveParticipantToDB(p)
+			self._saveParticipantToDB(p)
 
 		#Saving to TeamBridge
 		self.Cursor.execute('delete from TeamBridge where TeamBridge.TeamComboKey = ?',
@@ -203,11 +231,11 @@ class QueryManager():
 
 		#Saving Teams
 		for t in match.Teams:
-			self.saveTeamToDB(t)
+			self._saveTeamToDB(t)
 
 		return True
 
-	def saveParticipantToDB(self, participant):
+	def _saveParticipantToDB(self, participant):
 		self.Cursor.execute('''
 				select 
 					1
@@ -259,7 +287,7 @@ class QueryManager():
 
 		return True
 
-	def saveTeamToDB(self, team):
+	def _saveTeamToDB(self, team):
 		self.Cursor.execute('''
 			select 
 				1
@@ -286,8 +314,7 @@ class QueryManager():
 
 		return True
 
-
-	def getPlayerFromDB(self, name = None, id = None):
+	def _getPlayerFromDB(self, name = None, id = None):
 		assert name is not None or id is not None, 'Needs an id for the player'
 		if name is not None:
 			self.Cursor.execute('select * from PlayerDim where PlayerDim.Name = ? limit 1', (name,))
@@ -313,7 +340,7 @@ class QueryManager():
 		return player
 
 	@SQLCommit
-	def savePlayerToDB(self, player):
+	def _savePlayerToDB(self, player):
 		self.Cursor.execute(('''
 						select 
 							1 
@@ -343,7 +370,7 @@ class QueryManager():
 		self.Cursor.executemany('insert into MatchBridge values (?,?,?)', bridgeRows)
 		return True
 
-	def request(self, reqUrl):
+	def _request(self, reqUrl):
 		header = {
 		  "Authorization": "Bearer {}".format(self.APIKey),
 		  "Accept": "application/vnd.api+json"
@@ -367,10 +394,7 @@ def main():
 	qm = QueryManager(key, 'data.db')
 	player = qm.getPlayer('Kevdog25')
 	for m in player.Matches:
-		print(m)
-
-	match = qm.getMatchDetails(m)
-	print(match.CreatedAt)
+		print(qm.getMatchDetails(m))
 
 	return
 

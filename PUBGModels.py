@@ -1,9 +1,7 @@
 import time
 
-# I hate dict notation. So I turned them into objects
-class SQLRow():
-	def __init__(self):
-		return
+
+class Player():
 
 	@classmethod
 	def FromSQL(cls, row):
@@ -13,7 +11,6 @@ class SQLRow():
 		return p
 
 
-class Player(SQLRow):
 	@classmethod
 	def FromJSON(cls, dict):
 		p = Player()
@@ -60,7 +57,16 @@ class Player(SQLRow):
 				self.MatchComboKey)
 
 
-class Match(SQLRow):
+class Match():
+
+	@classmethod
+	def FromSQL(cls, row):
+		p = Match()
+		for key in row.keys():
+			p.__dict__[key] = row[key]
+		return p
+
+
 	@classmethod
 	def FromJSON(cls, dict, included):
 		m = Match()
@@ -113,7 +119,16 @@ class Match(SQLRow):
 				self.TeamComboKey, self.ParticipantComboKey)
 
 
-class Participant(SQLRow):
+class Participant():
+
+
+	@classmethod
+	def FromSQL(cls, row):
+		p = Participant()
+		for key in row.keys():
+			p.__dict__[key] = row[key]
+		return p
+
 
 	@classmethod
 	def FromJSON(cls, dict):
@@ -201,7 +216,16 @@ class Participant(SQLRow):
 			self.RideDistance,self.VehicleDestroys,self.WalkDistance,self.WeaponsAcquired)
 
 
-class Team(SQLRow):
+class Team():
+
+
+	@classmethod
+	def FromSQL(cls, row):
+		p = Team()
+		for key in row.keys():
+			p.__dict__[key] = row[key]
+		return p
+
 
 	@classmethod
 	def FromJSON(cls, dict):
@@ -228,7 +252,14 @@ class Team(SQLRow):
 		return (self.TeamId,self.Rank,self.TeamNumber,self.Won,self.ParticipantComboKey)
 
 
-class Asset(SQLRow):
+class Asset():
+
+	@classmethod
+	def FromSQL(cls, row):
+		p = Asset()
+		for key in row.keys():
+			p.__dict__[key] = row[key]
+		return p
 
 	@classmethod
 	def FromJSON(cls, dict):
