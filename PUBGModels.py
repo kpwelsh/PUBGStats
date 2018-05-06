@@ -1,25 +1,43 @@
 import time
+from dateutil import parser
 
+
+def toDict(obj, classKey=None):
+    if isinstance(obj, dict):
+        data = {}
+        for (k, v) in obj.items():
+            data[k] = toDict(v, classKey)
+        return data
+    elif hasattr(obj, "_ast"):
+        return toDict(obj._ast())
+    elif hasattr(obj, "__iter__") and not isinstance(obj, str):
+        return [toDict(v, classKey) for v in obj]
+    elif hasattr(obj, "__dict__"):
+        data = dict([(key, toDict(value, classKey))
+            for key, value in obj.__dict__.items()
+            if not callable(value) and not key.startswith('_')])
+        if classKey is not None and hasattr(obj, "__class__"):
+            data[classKey] = obj.__class__.__name__
+        return data
+    else:
+        return obj
 
 class Player():
-
 	@classmethod
-	def FromSQL(cls, row):
+	def FromBSON(cls, dict):
 		p = Player()
-		for key in row.keys():
-			p.__dict__[key] = row[key]
+		for key,v in dict.items():
+			p.__dict__[key] = v
 		return p
-
 
 	@classmethod
 	def FromJSON(cls, dict):
 		p = Player()
 		p.PlayerId = dict['id']
-		p.MatchComboKey = 'Player:{}'.format(p.PlayerId)
 		p.Matches = [m['id'] for m in dict['relationships']['matches']['data']]
 		p.ShardId = dict['attributes']['shardId']
-		p.CreatedAt = dict['attributes']['createdAt']
-		p.UpdatedAt = dict['attributes']['updatedAt']
+		p.CreatedAt = time.mktime(parser.parse(dict['attributes']['createdAt']).timetuple())
+		p.UpdatedAt = time.mktime(parser.parse(dict['attributes']['updatedAt']).timetuple())
 		p.PatchVersion = dict['attributes']['patchVersion']
 		p.Name = dict['attributes']['name']
 		p.QueryTime = time.time()
@@ -48,30 +66,21 @@ class Player():
 		return
 
 
-	def matchComboKey(self):
-		return 'Player:{}'.format(self.Id)
-
-	def asRow(self):
-		'''(PlayerId, Name, QueryTime, ShardId, CreatedAt, UpdatedAt, PatchVersion, MatchComboKey)'''
-		return (self.PlayerId, self.Name, self.QueryTime, self.ShardId, self.CreatedAt, self.UpdatedAt, self.PatchVersion,
-				self.MatchComboKey)
-
-
 class Match():
-
 	@classmethod
-	def FromSQL(cls, row):
-		p = Match()
-		for key in row.keys():
-			p.__dict__[key] = row[key]
-		return p
-
+	def FromBSON(cls, dict):
+		m = Match()
+		for key,v in dict.items():
+			m.__dict__[key] = v
+		m.Teams = set(Team.FromBSON(t) for f in m.Teams)
+		m.Participants = set(Participant.FromBSON(t) for f in m.Participants)
+		return m
 
 	@classmethod
 	def FromJSON(cls, dict, included):
 		m = Match()
 		m.MatchId = dict['id']
-		m.CreatedAt = dict['attributes']['createdAt']
+		m.CreatedAt = time.mktime(parser.parse(dict['attributes']['createdAt']).timetuple())
 		m.Duration = dict['attributes']['duration']
 		m.GameMode = dict['attributes']['gameMode']
 		m.MapName = dict['attributes']['mapName']
@@ -79,9 +88,7 @@ class Match():
 		m.TitleId = dict['attributes']['titleId']
 
 		m.Teams = set()
-		m.TeamComboKey = 'Match:{}'.format(m.MatchId)
 		m.Participants = set()
-		m.ParticipantComboKey = 'Match:{}'.format(m.MatchId)
 
 		telemetryId = dict['relationships']['assets']['data'][0]['id']
 		if len(dict['relationships']['assets']['data']) > 1:
@@ -109,26 +116,17 @@ class Match():
 		self.Teams = {}
 		self.TeamComboKey = None
 		self.Participants = {}
-		self.ParticipantComboKey = None
 
 		return
 
-	def asRow(self):
-		'''(MatchId, MapName, Duration, TelemetryUrl, CreatedAt, ShardId, TitleId, TeamComboKey, ParticipantComboKey)'''
-		return (self.MatchId, self.MapName, self.Duration, self.TelemetryUrl, self.CreatedAt, self.ShardId, self.TitleId,
-				self.TeamComboKey, self.ParticipantComboKey)
-
-
 class Participant():
 
-
 	@classmethod
-	def FromSQL(cls, row):
+	def FromBSON(cls, dict):
 		p = Participant()
-		for key in row.keys():
-			p.__dict__[key] = row[key]
+		for key,v in dict.items():
+			p.__dict__[key] = v
 		return p
-
 
 	@classmethod
 	def FromJSON(cls, dict):
@@ -202,29 +200,14 @@ class Participant():
 		self.WeaponsAcquired = None
 		return
 
-	def asRow(self):
-		'''
-		(ParticipantId,PlayerId,Name,KillPlace,KillPoints,LastKillPoints,
-		KillPointsDelta,WinPlace,WinPoints,LastWinPoints ,WinPointsDelta,DBNOs,
-		TimeSurvived,Boosts,Heals,DeathType,Revives,Kills,HeadshotKills,
-		KillStreaks,LongestKill,RoadKills,TeamKills,Assists,MostDamage,DamageDealt,
-		RideDistance,VehicleDestroys,WalkDistance,WeaponsAcquired)'''
-		return (self.ParticipantId,self.PlayerId,self.Name,self.KillPlace,self.KillPoints,self.LastKillPoints,
-			self.KillPointsDelta,self.WinPlace,self.WinPoints,self.LastWinPoints ,self.WinPointsDelta,self.DBNOs,
-			self.TimeSurvived,self.Boosts,self.Heals,self.DeathType,self.Revives,self.Kills,self.HeadshotKills,
-			self.KillStreaks,self.LongestKill,self.RoadKills,self.TeamKills,self.Assists,self.MostDamage,self.DamageDealt,
-			self.RideDistance,self.VehicleDestroys,self.WalkDistance,self.WeaponsAcquired)
-
 
 class Team():
-
-
 	@classmethod
-	def FromSQL(cls, row):
-		p = Team()
-		for key in row.keys():
-			p.__dict__[key] = row[key]
-		return p
+	def FromBSON(cls, dict):
+		t = Team()
+		for key in dict.keys():
+			t.__dict__[key] = row[key]
+		return t
 
 
 	@classmethod
@@ -235,7 +218,6 @@ class Team():
 		t.TeamNumber = dict['attributes']['stats']['teamId']
 		t.Won = dict['attributes']['won']
 		t.Participants = set(p['id'] for p in dict['relationships']['participants']['data'])
-		t.ParticipantComboKey = 'Team:{}'.format(t.TeamId)
 		return t
 
 	def __init__(self):
@@ -244,49 +226,4 @@ class Team():
 		self.TeamNumber = None
 		self.Won = None
 		self.Participants = None
-		self.ParticipantComboKey = None
-		return
-
-	def asRow(self):
-		'''(TeamId,Rank,TeamNumber,Won,ParticipantComboKey)'''
-		return (self.TeamId,self.Rank,self.TeamNumber,self.Won,self.ParticipantComboKey)
-
-
-class Asset():
-
-	@classmethod
-	def FromSQL(cls, row):
-		p = Asset()
-		for key in row.keys():
-			p.__dict__[key] = row[key]
-		return p
-
-	@classmethod
-	def FromJSON(cls, dict):
-		a = Asset()
-		a.AssetId = dict['id']
-		a.CreatedAt = dict['attributes']['createdAt']
-		a.Name = dict['attributes']['name']
-		a.URL = dict['attributes']['URL']
-		a.Value = None
-		return a
-
-	def __init__(self):
-		self.AssetId = None
-		self.CreatedAt = None
-		self.Name = None
-		self.URL = None
-		self.Data = None
-		return
-
-	def asRow(self):
-		'''(AssetId, CreatedAt, Name, URL, Data)'''
-		return (self.AssetId, self.CreatedAt, self.Name, self.URL, self.Data)
-
-	def request(self):
-		header = {
-			"Accept": "application/vnd.api+json"
-		}
-		r = requests.get(self.URL, headers=header)
-		self.Value = r.json()
 		return
