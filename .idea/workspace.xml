@@ -13,16 +13,28 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="QueryManager.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="QueryManager.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/QueryManager.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="595">
-                  <caret line="84" column="37" selection-start-line="84" selection-start-column="37" selection-end-line="84" selection-end-column="37" />
+                <state relative-caret-position="463">
+                  <caret line="105" column="37" selection-start-line="105" selection-start-column="37" selection-end-line="110" selection-end-column="88" />
                   <folding>
                     <element signature="e#0#15#0" expanded="true" />
                     <element signature="e#478#1226#0" />
                     <element signature="e#1917#2170#0" />
-                    <element signature="e#1655#2039#0" />
+                    <element signature="e#1670#1832#0" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PositionTracker.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/PositionTracker.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+                  <folding>
+                    <element signature="e#0#31#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -35,11 +47,12 @@
           <file leaf-file-name="PUBGModels.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/PUBGModels.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="629">
-                  <caret line="73" column="27" lean-forward="true" selection-start-line="73" selection-start-column="27" selection-end-line="73" selection-end-column="27" />
+                <state relative-caret-position="797">
+                  <caret line="227" column="25" selection-start-line="227" selection-start-column="25" selection-end-line="227" selection-end-column="25" />
                   <folding>
                     <element signature="e#0#11#0" expanded="true" />
                     <element signature="e#76#764#0" />
+                    <element signature="e#32#1069#0" />
                     <element signature="e#664#670#0" />
                     <element signature="e#902#1190#0" />
                     <element signature="e#3430#5200#0" />
@@ -80,6 +93,7 @@
         <option value="$PROJECT_DIR$/PubgStats.py" />
         <option value="$PROJECT_DIR$/PUBGModels.py" />
         <option value="$PROJECT_DIR$/QueryManager.py" />
+        <option value="$PROJECT_DIR$/PositionTracker.py" />
       </list>
     </option>
   </component>
@@ -119,7 +133,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.QueryManager">
+  <component name="RunManager" selected="Python.PositionTracker">
+    <configuration name="PositionTracker" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="PUBGStats" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PositionTracker.py" />
+      <option name="PARAMETERS" value="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNTg2OGRjMC0zMDkwLTAxMzYtMTZiZC0xOWVhNzI2ZTU4NWEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTI1MzA0NDQwLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InB1Ymdib3QtOTY4ZWQzYjMtYTcyOC00YjEzLWE2ZjctNjc4NGFjMDVjYzdiIiwic2NvcGUiOiJjb21tdW5pdHkiLCJsaW1pdCI6MTB9.sAr832RmP1KanUPdqN044HyHoBI2mSUtQfEIc3phzPk" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="PubgStats" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="PUBGStats" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -159,9 +191,11 @@
     <list>
       <item itemvalue="Python.PubgStats" />
       <item itemvalue="Python.QueryManager" />
+      <item itemvalue="Python.PositionTracker" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.PositionTracker" />
         <item itemvalue="Python.QueryManager" />
         <item itemvalue="Python.PubgStats" />
       </list>
@@ -213,7 +247,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="33" />
+      <option name="time" value="36" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -225,7 +259,7 @@
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#478#1226#0" />
             <element signature="e#1917#2170#0" />
-            <element signature="e#1655#2039#0" />
+            <element signature="e#1670#1832#0" />
           </folding>
         </state>
       </provider>
@@ -237,6 +271,7 @@
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#76#764#0" />
+            <element signature="e#32#1069#0" />
             <element signature="e#664#670#0" />
             <element signature="e#902#1190#0" />
             <element signature="e#3430#5200#0" />
@@ -253,7 +288,7 @@
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#478#1226#0" />
             <element signature="e#1917#2170#0" />
-            <element signature="e#1655#2039#0" />
+            <element signature="e#1670#1832#0" />
           </folding>
         </state>
       </provider>
@@ -265,6 +300,7 @@
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#76#764#0" />
+            <element signature="e#32#1069#0" />
             <element signature="e#664#670#0" />
             <element signature="e#902#1190#0" />
             <element signature="e#3430#5200#0" />
@@ -277,11 +313,12 @@
     <entry file="file://$PROJECT_DIR$/PubgStats.py" />
     <entry file="file://$PROJECT_DIR$/PUBGModels.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="73" column="27" lean-forward="true" selection-start-line="73" selection-start-column="27" selection-end-line="73" selection-end-column="27" />
+        <state relative-caret-position="797">
+          <caret line="227" column="25" selection-start-line="227" selection-start-column="25" selection-end-line="227" selection-end-column="25" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#76#764#0" />
+            <element signature="e#32#1069#0" />
             <element signature="e#664#670#0" />
             <element signature="e#902#1190#0" />
             <element signature="e#3430#5200#0" />
@@ -292,13 +329,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/QueryManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="84" column="37" selection-start-line="84" selection-start-column="37" selection-end-line="84" selection-end-column="37" />
+        <state relative-caret-position="463">
+          <caret line="105" column="37" selection-start-line="105" selection-start-column="37" selection-end-line="110" selection-end-column="88" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#478#1226#0" />
             <element signature="e#1917#2170#0" />
-            <element signature="e#1655#2039#0" />
+            <element signature="e#1670#1832#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PositionTracker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -72,8 +72,8 @@ class Match():
 		m = Match()
 		for key,v in dict.items():
 			m.__dict__[key] = v
-		m.Teams = set(Team.FromBSON(t) for f in m.Teams)
-		m.Participants = set(Participant.FromBSON(t) for f in m.Participants)
+		m.Teams = set(Team.FromBSON(t) for t in m.Teams)
+		m.Participants = set(Participant.FromBSON(t) for t in m.Participants)
 		return m
 
 	@classmethod
@@ -206,7 +206,7 @@ class Team():
 	def FromBSON(cls, dict):
 		t = Team()
 		for key in dict.keys():
-			t.__dict__[key] = row[key]
+			t.__dict__[key] = dict[key]
 		return t
 
 

@@ -6,6 +6,7 @@ import time
 import dateutil.parser
 import pymongo
 import datetime
+import numpy as np
 from PUBGModels import *
 
 
@@ -14,9 +15,9 @@ class QueryManager():
 
 	def __init__(self, key, db):
 		assert key is not None and key != '', 'Needs a key'
-		assert db !='', 'Needs a db source'
+		assert db is not None, 'Needs a db source'
 		self.APIKey = key
-		self.DB = pymongo.MongoClient()[db]
+		self.DB = db
 		return
 
 	# Public API
@@ -61,6 +62,23 @@ class QueryManager():
 
 		return match
 
+	def cacheTelemetryData(self, match):
+
+		if self.DB.Events.find_one({'MatchId' : match.MatchId}) is not None:
+			print(self.DB.Events.find_one({'MatchId' : match.MatchId}))
+			return
+
+		header = {
+			'Accept' : 'application/vnd.api+json'
+		}
+		r = requests.get(match.TelemetryUrl, headers = header).json()
+		for e in r:
+			e['MatchId'] = match.MatchId
+			e['_D'] = time.mktime(dateutil.parser.parse(e['_D']).timetuple())
+		self.DB.Events.insert_many(r)
+
+		return
+
 	def _request(self, reqUrl):
 		header = {
 		  "Authorization": "Bearer {}".format(self.APIKey),
@@ -81,11 +99,23 @@ def main():
 		print('Needs an API key as a command line arg.')
 		return
 	key = sys.argv[1]
-	
-	qm = QueryManager(key, 'PUBGStats')
+
+	db = pymongo.MongoClient()['PUBGStats']
+	qm = QueryManager(key, db)
+
 	player = qm.getPlayer('Kevdog25')
-	for m in player.Matches:
-		print(qm.getMatchDetails(m))
+
+	times = [(e['_D'], (e['character']['location']['x'], e['character']['location']['y'], e['character']['location']['z']))
+			  				for e in db.Events.find({'_T' : 'LogPlayerPosition',
+											  'MatchId' : player.Matches[0],
+											  'character.accountId' : player.PlayerId})]
+	times = sorted(times)
+	diff = []
+	for i,t in enumerate(times[1:]):
+		diff.append(t[0] - times[i])
+
+	print(np.mean(diff))
+
 
 	return
 
